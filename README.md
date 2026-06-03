@@ -1,58 +1,280 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Inventario de Activos TI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema web desarrollado para registrar, consultar y administrar activos tecnológicos e institucionales. La aplicación permite mantener trazabilidad sobre el estado, ubicación, responsable, mantenimiento, licencias y baja de cada activo.
 
-## About Laravel
+El proyecto fue desarrollado como parte de una residencia profesional de la carrera de Ingeniería en Sistemas Computacionales.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Descripción general
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+El sistema centraliza la información de inventario que anteriormente podía encontrarse dispersa o registrarse de forma manual. Cada activo cuenta con un identificador único y puede asociarse con un código QR para facilitar su consulta.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+La aplicación incluye un panel administrativo privado y una vista pública limitada para consulta mediante QR. La información sensible permanece restringida al personal autorizado.
 
-## Learning Laravel
+## Funcionalidades principales
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* Registro, consulta y edición de activos.
+* Clasificación de activos por categorías.
+* Gestión de estados del activo.
+* Asignación de responsables y ubicaciones.
+* Historial de asignaciones y devoluciones.
+* Registro de mantenimientos preventivos y correctivos.
+* Asociación de técnicos internos o externos.
+* Registro de costos, resultados y comprobantes de mantenimiento.
+* Gestión de licencias asociadas a activos.
+* Control de vigencia, vencimiento y cancelación de licencias.
+* Registro de bajas con motivo, autorización y evidencia.
+* Generación de códigos QR individuales.
+* Consulta pública limitada mediante QR.
+* Control de usuarios, roles y permisos.
+* Registro de auditoría y trazabilidad.
+* Exportación de reportes generales y reportes de auditoría en formato PDF.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Módulos del sistema
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+| Módulo           | Descripción                                                     |
+| ---------------- | --------------------------------------------------------------- |
+| Usuarios         | Administración de cuentas de acceso al sistema.                 |
+| Roles y permisos | Control de privilegios según el tipo de usuario.                |
+| Activos          | Registro de información técnica, fotografía y código QR.        |
+| Categorías       | Clasificación de activos por tipo.                              |
+| Ubicaciones      | Administración de áreas y espacios institucionales.             |
+| Asignaciones     | Registro de responsables, ubicaciones y fechas de retorno.      |
+| Licencias        | Gestión de software y vigencias asociadas a activos.            |
+| Mantenimientos   | Seguimiento de intervenciones preventivas y correctivas.        |
+| Bajas            | Registro formal de activos retirados de operación.              |
+| Auditoría        | Historial de operaciones realizadas por los usuarios.           |
+| Reportes         | Resumen general del inventario y exportación de documentos PDF. |
 
-## Agentic Development
+## Tecnologías utilizadas
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+| Tecnología     | Uso dentro del proyecto                                               |
+| -------------- | --------------------------------------------------------------------- |
+| PHP            | Lenguaje principal del backend.                                       |
+| Laravel        | Framework para el desarrollo de la aplicación web.                    |
+| Filament       | Panel administrativo y componentes de interfaz.                       |
+| PostgreSQL     | Sistema de gestión de base de datos relacional.                       |
+| Docker Compose | Contenedor local para PostgreSQL.                                     |
+| Blade          | Motor de plantillas para las vistas.                                  |
+| Tailwind CSS   | Estilos de interfaz.                                                  |
+| Nginx          | Servidor web utilizado en producción.                                 |
+| Amazon EC2     | Servidor virtual utilizado para desplegar la aplicación.              |
+| Amazon RDS     | Servicio administrado utilizado para alojar PostgreSQL en producción. |
+| Git y GitHub   | Control de versiones y respaldo del código fuente.                    |
 
-```bash
-composer require laravel/boost --dev
+## Arquitectura general
 
-php artisan boost:install
+La aplicación sigue una arquitectura cliente-servidor.
+
+```text
+Cliente web
+    |
+    v
+Aplicación Laravel + Filament
+    |
+    v
+Base de datos PostgreSQL
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+En el despliegue realizado en AWS:
 
-## Contributing
+```text
+Navegador web
+    |
+    v
+Amazon EC2 + Nginx + PHP
+    |
+    v
+Amazon RDS PostgreSQL
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Requisitos para ejecución local
 
-## Code of Conduct
+Antes de instalar el proyecto, se requiere:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* PHP 8.2 o superior.
+* Composer.
+* Node.js y npm.
+* Docker.
+* Docker Compose.
+* Git.
 
-## Security Vulnerabilities
+## Instalación local
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 1. Clonar el repositorio
 
-## License
+```bash
+git clone https://github.com/Josue-Isai-Sanchez-Santos/inventario-ti-laravel.git
+cd inventario-ti-laravel
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 2. Instalar dependencias de PHP
+
+```bash
+composer install
+```
+
+### 3. Crear el archivo de configuración local
+
+```bash
+cp .env.example .env
+```
+
+### 4. Generar la clave de Laravel
+
+```bash
+php artisan key:generate
+```
+
+### 5. Iniciar PostgreSQL mediante Docker Compose
+
+```bash
+docker compose up -d
+```
+
+### 6. Ejecutar las migraciones
+
+```bash
+php artisan migrate
+```
+
+### 7. Cargar los permisos iniciales
+
+```bash
+php artisan db:seed --class=PermissionsSeeder
+```
+
+### 8. Crear el enlace para archivos públicos
+
+```bash
+php artisan storage:link
+```
+
+### 9. Instalar dependencias del frontend
+
+```bash
+npm install
+npm run build
+```
+
+### 10. Crear un usuario administrativo
+
+```bash
+php artisan make:filament-user
+```
+
+### 11. Iniciar el servidor local
+
+```bash
+php artisan serve
+```
+
+La aplicación estará disponible normalmente en:
+
+```text
+http://127.0.0.1:8000
+```
+
+El panel administrativo se encuentra en:
+
+```text
+http://127.0.0.1:8000/admin
+```
+
+## Variables de entorno
+
+El archivo `.env.example` contiene valores genéricos para ejecución local.
+
+Las credenciales reales deben mantenerse únicamente en `.env`, archivo que está excluido del repositorio mediante `.gitignore`.
+
+Ejemplo de configuración local para PostgreSQL:
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=inventario
+DB_USERNAME=inventario_user
+DB_PASSWORD=inventario_pass
+```
+
+La contraseña mostrada es exclusivamente para desarrollo local. No debe reutilizarse en un entorno de producción.
+
+## Base de datos
+
+El esquema de PostgreSQL se encuentra documentado en:
+
+```text
+docs/database/bd_inventario_schema.sql
+```
+
+El archivo contiene la estructura de tablas, relaciones, llaves foráneas e índices, sin incluir registros operativos ni credenciales.
+
+Entre las tablas principales se encuentran:
+
+```text
+users
+roles
+user_roles
+permissions
+role_permissions
+categorias
+ubicaciones
+estados_activo
+estados_licencia
+activos
+asignaciones
+licencias
+mantenimientos
+bajas
+auditoria_eventos
+```
+
+## Consulta mediante código QR
+
+Cada activo puede generar una ficha PDF con código QR. Al escanearlo, el sistema muestra únicamente información pública autorizada, como:
+
+* Nombre del activo.
+* Marca.
+* Ubicación general.
+* Fotografía.
+* Estado general.
+
+Los datos administrativos, económicos, técnicos y de auditoría permanecen restringidos al panel privado.
+
+## Seguridad
+
+El repositorio no debe incluir:
+
+* Archivos `.env`.
+* Contraseñas.
+* Claves privadas `.pem`.
+* Tokens de acceso.
+* Credenciales de AWS.
+* Credenciales de Amazon RDS.
+* Comprobantes o documentos operativos.
+* Fotografías cargadas durante las pruebas.
+* Códigos QR generados dinámicamente.
+
+Las reglas correspondientes se encuentran definidas en `.gitignore`.
+
+## Despliegue
+
+El sistema fue desplegado en un entorno de nube utilizando:
+
+* Amazon EC2 para alojar la aplicación.
+* Nginx como servidor web.
+* PHP-FPM para procesar la aplicación Laravel.
+* Amazon RDS para alojar PostgreSQL.
+* Elastic IP para mantener una dirección pública estable durante las pruebas de despliegue.
+
+Las credenciales y direcciones del entorno de producción no se incluyen en este repositorio.
+
+## Autor
+
+**Josué Isaí Sanchez Santos**
+Ingeniería en Sistemas Computacionales
+2026
+
+## Nota
+
+Este repositorio contiene el código fuente y la documentación técnica del proyecto. Los datos operativos utilizados durante las pruebas no forman parte del repositorio.
