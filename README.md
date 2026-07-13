@@ -278,3 +278,8 @@ Ingeniería en Sistemas Computacionales
 ## Nota
 
 Este repositorio contiene el código fuente y la documentación técnica del proyecto. Los datos operativos utilizados durante las pruebas no forman parte del repositorio.
+
+
+## Licencia
+
+Este proyecto se distribuye bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más información.
